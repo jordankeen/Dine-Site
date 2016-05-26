@@ -156,6 +156,19 @@ $(function(){
 
 // add in jquery plug in to auto complete search bar
 
+
+
+$('#autocomplete').autocomplete({
+    lookup: dineAloneArtists
+    transformResult: function(response) {
+        return {
+            suggestions: $.map(response.myData, function(dataItem) {
+                return { value: dataItem.valueField, data: dataItem.dataField };
+            })
+        };
+    }
+});
+
 // add in jquery for accordian 
 
 
@@ -180,3 +193,10 @@ $(function(){
 
 
 // we want to do whatever we need to do to build a playlist in our page
+
+
+
+
+
+// BONUS: we can use the spotify artist id to get the songkick artist upcoming events
+
