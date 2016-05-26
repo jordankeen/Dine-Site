@@ -210,6 +210,9 @@ app.searchButtonListener = function(){
 		e.preventDefault();
 		var artist = $('.searchFormInput').val();
 		userArtistChoice.push(artist);
+
+		$('.searchFormInput').val('');
+
 		console.log("The button was pressed");
 		console.log(artist);
 		app.getArtistsInfo(userArtistChoice);
