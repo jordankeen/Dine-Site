@@ -1,3 +1,4 @@
+// Create a global object for the app called 'app'
 var app = {};
 
 var dineAloneArtists = [ 
@@ -95,13 +96,16 @@ var dineAloneArtists = [
 			'Yukon Blonde'
 ];
 
+// Temporary Array for testing.
 app.tempArray = ['arkells','Wintersleep','You+Me','Yukon Blonde'];
-
-// Create a global object for the app called 'app'
 
 // Create an empty array into which we can push our artists
 app.artists = [];
 
+// Create an empty array of songs
+app.songs = [];
+
+// Create an object of artists for the purpose of having a key that the artistCardTemplate will use (keyname: artist).
 app.artistObj = {
 	artists: dineAloneArtists.map(function(artist){
 		return {
@@ -110,7 +114,9 @@ app.artistObj = {
 	})
 }
 
+// Select html from handlebars template
 app.artistCardTemplate = $('#artistCardTemplate').html();
+// Compile html for handlebars template
 app.template = Handlebars.compile(app.artistCardTemplate);
 
 
@@ -118,6 +124,13 @@ app.template = Handlebars.compile(app.artistCardTemplate);
 // app.init = {
 // 	app.getArtistsInfo();
 // };
+
+// app.getArtistsInfo loops through an array and gets calls the getData method to get the artist object from spotify. Note: the getData method also appends the artist object returned from spotify to the handlebars artistCardTemplate.
+app.getArtistsInfo = function(arrayName){
+	arrayName.forEach(function(artistName){
+		app.getData(artistName);
+	})
+}
 
 // Create a method to get artists from spotify that requires an input of the artist name
 // The query filters for artists and guarantees the search term in the artist name.
@@ -138,12 +151,25 @@ app.getData = function(artistName) {
 	});
 };
 
-// app.getArtistsInfo loops through the dineAloneArtists array and gets the artist object from spotify using the getData method.
-app.getArtistsInfo = function(arrayName){
-	arrayName.forEach(function(artistName){
-		app.getData(artistName);
+// Create a function to get songs based on an artist ID.
+// method requires an artistID, a country code (e.g. CA)
+app.getSongs = function(artistID, country, numberOfSongs) {
+	$.ajax({
+		url: "https://api.spotify.com/v1/artists/" + artistID + "/top-tracks",
+		method: 'GET',
+		dataType: 'json',
+		data: {
+			country: country,
+		}
 	})
+	.then(function(res){
+		// console.log(res);
+		for (var i = 0; i < numberOfSongs; i++) {
+			app.songs.push(res.tracks[i].id);
+		}
+	});
 }
+
 
 
 // app.show = function(){
@@ -151,7 +177,7 @@ app.getArtistsInfo = function(arrayName){
 // }
 
 $(function(){
-	app.getArtistsInfo();
+	// app.getArtistsInfo();
 });
 
 // add in jquery plug in to auto complete search bar
@@ -159,7 +185,7 @@ $(function(){
 
 
 $('#autocomplete').autocomplete({
-    lookup: dineAloneArtists
+    lookup: dineAloneArtists,
     transformResult: function(response) {
         return {
             suggestions: $.map(response.myData, function(dataItem) {
