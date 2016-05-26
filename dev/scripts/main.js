@@ -104,7 +104,7 @@ app.artists = [];
 
 
 // Create an empty array of songs
-	 app.songs = [];
+app.songs = [];
 
 
 // Create an object of artists for the purpose of having a key that the artistCardTemplate will use (keyname: artist).
@@ -210,7 +210,9 @@ app.searchButtonListener = function(){
 		e.preventDefault();
 		var artist = $('.searchFormInput').val();
 		userArtistChoice.push(artist);
+
 		$('.searchFormInput').val('');
+
 		console.log("The button was pressed");
 		console.log(artist);
 		app.getArtistsInfo(userArtistChoice);
@@ -225,16 +227,15 @@ app.searchButtonListener = function(){
 // Join all spotify song IDs into one string and create into URL for spotify player
 // concat user selected songs into one comma separated string and store in variable
 
-// app.createPlaylist = function(){
-// 	var spotifySongListChain = app.songs.join(',');
-// 	// create a URL by using the concated string 
-// 	var spotifySongListURL = "https://embed.spotify.com/?uri=spotify:trackset:DineAloneRecords&Playlist:" + spotifySongListChain + "&theme=white";
-// 	console.log(spotifySongListURL);
-// 	$('iframe').attr('src', spotifySongListURL);
-// };
+app.createPlaylist = function(){
+	// Create a string of all song IDs from the app.songs array and store it in the spotifySongListChain
+	var spotifySongListChain = app.songs.join(',');
+	// create iframe html code that uses spotifySongListChain to dynamically create an iframe, store it in a widgetCode variable, and....
+	var widgetCode = `<iframe class="spotify" src="https://embed.spotify.com/?uri=spotify:trackset:DineAloneRecords:${spotifySongListChain}" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>`;
+	// insert it into the spotifyContainer in the html using the widgetCode
+	$('.spotifyContainer').html(widgetCode);
+};
 
-
-// https://embed.spotify.com/?uri=spotify:trackset:Wayhome 2016 Playlist:4zF9ozwm7BDZok8QbZ6eT8,52qCHYLOsYHYRS6bF7n8WO,7Fcv5SpdWdDEl5IaHikAhv,3cSIpAkKeKgP3UrufyVAAr,6eMUOs71IP3IteZOxbjFQY,6igTxl2BTvikWJvz0Qi1Ok&theme=white
 
 // BONUS: we can use the spotify artist id to get the songkick artist upcoming events
 
