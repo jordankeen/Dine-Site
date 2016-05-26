@@ -1,44 +1,4 @@
-// Create a global object for the app called 'app'
 var app = {};
-
-// Create an empty array into which we can push our artists
-app.artists = [];
-
-// Create an app.init function to run that will house all functions that are initialized when the page loads
-// app.init = {
-// 	app.getArtistsInfo();
-// };
-
-// Create a method to get artists from spotify that requires an input of the artist name
-// The query filters for artists and guarantees the search term in the artist name.
-app.getData = function(artistName) {
-	$.ajax({
-		url: "https://api.spotify.com/v1/search",
-		method: 'GET',
-		dataType: 'json',
-		data: {
-			q: artistName+" artist:"+ artistName,
-			type: 'artist',
-			artist: artistName,
-		}
-	})
-	.then(function(res){
-		app.artists.push(res.artists.items[0]);
-	});
-};
-
-// app.getArtistsInfo loops through the dineAloneArtists array and gets the artist object from spotify using the getData method.
-app.getArtistsInfo = function(){
-	dineAloneArtists.forEach(function(artistName){
-		app.getData(artistName);
-		console.log('getting another artists info')
-	})
-}
-
-
-// app.show = function(){
-// 	for (var i = 0; i<)
-// }
 
 var dineAloneArtists = [ 
 			'…And You Will Know Us By The Trail Of Dead', 
@@ -135,6 +95,61 @@ var dineAloneArtists = [
 			'Yukon Blonde'
 ];
 
+app.tempArray = ['arkells','Wintersleep','You+Me','Yukon Blonde'];
+
+// Create a global object for the app called 'app'
+
+// Create an empty array into which we can push our artists
+app.artists = [];
+
+app.artistObj = {
+	artists: dineAloneArtists.map(function(artist){
+		return {
+			name: artist
+		}
+	})
+}
+
+app.artistCardTemplate = $('#artistCardTemplate').html();
+app.template = Handlebars.compile(app.artistCardTemplate);
+
+
+// Create an app.init function to run that will house all functions that are initialized when the page loads
+// app.init = {
+// 	app.getArtistsInfo();
+// };
+
+// Create a method to get artists from spotify that requires an input of the artist name
+// The query filters for artists and guarantees the search term in the artist name.
+app.getData = function(artistName) {
+	$.ajax({
+		url: "https://api.spotify.com/v1/search",
+		method: 'GET',
+		dataType: 'json',
+		data: {
+			q: artistName+" artist:"+ artistName,
+			type: 'artist',
+			artist: artistName,
+		}
+	})
+	.then(function(res){
+		app.artists.push(res.artists.items[0]);
+		$('.artistsContainer').append(app.template(res.artists.items[0]));
+	});
+};
+
+// app.getArtistsInfo loops through the dineAloneArtists array and gets the artist object from spotify using the getData method.
+app.getArtistsInfo = function(arrayName){
+	arrayName.forEach(function(artistName){
+		app.getData(artistName);
+	})
+}
+
+
+// app.show = function(){
+// 	for (var i = 0; i<)
+// }
+
 $(function(){
 	app.getArtistsInfo();
 });
@@ -165,4 +180,3 @@ $(function(){
 
 
 // we want to do whatever we need to do to build a playlist in our page
-
