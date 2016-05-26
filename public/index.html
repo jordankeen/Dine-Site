@@ -4,6 +4,22 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="styles/style.css">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<script id="artistCardTemplate" type="x-handlebars-template">
+		<div class="artistCard">
+			<div style="background-image: url({{images.[0].url}})" class="artistCardImgContainer"></div>
+			<p class="artistCardName">{{name}}</p> 
+			{{#if genres}}
+				<p>Genre: {{#each genres}}
+					{{this}}
+				</p>{{/each}}
+			{{/if}}
+			<div class="buttonsContainer">
+				<button class="viewMoreInfo">More Info</button>
+				<button class="addToPlaylist">Add to Playlist</button>
+			</div>
+		</div>
+	</script>
+
 	<title>Dine Alone Records</title>
 </head>
 <body>
@@ -16,5 +32,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
 	<script src="scripts/main.js"></script>
+
+	<div class="artistsContainer">
+		<!-- handlebars cards go here. -->
+	</div>
 </body>
 </html>
