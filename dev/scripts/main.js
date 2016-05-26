@@ -102,8 +102,10 @@ app.tempArray = ['arkells','Wintersleep','You+Me','Yukon Blonde'];
 // Create an empty array into which we can push our artists
 app.artists = [];
 
+
 // Create an empty array of songs
-app.songs = [];
+	 app.songs = [];
+
 
 // Create an object of artists for the purpose of having a key that the artistCardTemplate will use (keyname: artist).
 app.artistObj = {
@@ -121,12 +123,13 @@ app.template = Handlebars.compile(app.artistCardTemplate);
 
 
 // Create an app.init function to run that will house all functions that are initialized when the page loads
-// app.init = {
-// 	app.getArtistsInfo();
-// };
+app.init = function() {
+	app.searchButtonListener();
+};
 
 // app.getArtistsInfo loops through an array and gets calls the getData method to get the artist object from spotify. Note: the getData method also appends the artist object returned from spotify to the handlebars artistCardTemplate.
 app.getArtistsInfo = function(arrayName){
+	console.log(arrayName);
 	arrayName.forEach(function(artistName){
 		app.getData(artistName);
 	})
@@ -177,7 +180,7 @@ app.getSongs = function(artistID, country, numberOfSongs) {
 // }
 
 $(function(){
-	// app.getArtistsInfo();
+	app.init();
 });
 
 // add in jquery plug in to auto complete search bar
@@ -200,29 +203,38 @@ $('#autocomplete').autocomplete({
 
 // make var for user choice of artist and function for on change or on select or on enter
 
-//make var for spotify key
-// write ajax call to begin getting information from Spotify using choice of artist
+app.searchButtonListener = function(){
+	console.log("its listening");
+	$('form').on('submit', function(e){
+	var userArtistChoice = []
+		e.preventDefault();
+		var artist = $('.searchFormInput').val();
+		userArtistChoice.push(artist);
 
+		console.log("The button was pressed");
+		console.log(artist);
+		app.getArtistsInfo(userArtistChoice);
+	});
+}
+ 
 
-// use a for loop or use forEach() to loop through list and return data
-	// make call to access artists songs
-	// return the songs into an array
-// 
-// for loop through the artist chosen
-	// we want to store the genre of the artist chosen
-
-	// we want to store the image of the artist chosen
-
-	// we want to store the popularity
-
-	// push information into html/text
 
 
 // we want to do whatever we need to do to build a playlist in our page
 
+// Join all spotify song IDs into one string and create into URL for spotify player
+// concat user selected songs into one comma separated string and store in variable
+
+// app.createPlaylist = function(){
+// 	var spotifySongListChain = app.songs.join(',');
+// 	// create a URL by using the concated string 
+// 	var spotifySongListURL = "https://embed.spotify.com/?uri=spotify:trackset:DineAloneRecords&Playlist:" + spotifySongListChain + "&theme=white";
+// 	console.log(spotifySongListURL);
+// 	$('iframe').attr('src', spotifySongListURL);
+// };
 
 
-
+// https://embed.spotify.com/?uri=spotify:trackset:Wayhome 2016 Playlist:4zF9ozwm7BDZok8QbZ6eT8,52qCHYLOsYHYRS6bF7n8WO,7Fcv5SpdWdDEl5IaHikAhv,3cSIpAkKeKgP3UrufyVAAr,6eMUOs71IP3IteZOxbjFQY,6igTxl2BTvikWJvz0Qi1Ok&theme=white
 
 // BONUS: we can use the spotify artist id to get the songkick artist upcoming events
 
