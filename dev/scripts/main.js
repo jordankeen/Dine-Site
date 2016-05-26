@@ -159,7 +159,7 @@ $(function(){
 
 
 $('#autocomplete').autocomplete({
-    lookup: dineAloneArtists
+    lookup: dineAloneArtists,
     transformResult: function(response) {
         return {
             suggestions: $.map(response.myData, function(dataItem) {
