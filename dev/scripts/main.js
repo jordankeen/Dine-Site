@@ -151,5 +151,32 @@ app.getArtistsInfo = function(arrayName){
 // }
 
 $(function(){
-	// app.getArtistsInfo();
+	app.getArtistsInfo();
 });
+
+// add in jquery plug in to auto complete search bar
+
+// add in jquery for accordian 
+
+
+// make var for user choice of artist and function for on change or on select or on enter
+
+//make var for spotify key
+// write ajax call to begin getting information from Spotify using choice of artist
+
+
+// use a for loop or use forEach() to loop through list and return data
+	// make call to access artists songs
+	// return the songs into an array
+// 
+// for loop through the artist chosen
+	// we want to store the genre of the artist chosen
+
+	// we want to store the image of the artist chosen
+
+	// we want to store the popularity
+
+	// push information into html/text
+
+
+// we want to do whatever we need to do to build a playlist in our page
