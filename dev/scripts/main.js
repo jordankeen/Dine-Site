@@ -209,13 +209,20 @@ app.searchButtonListener = function(){
 	var userArtistChoice = []
 		e.preventDefault();
 		var artist = $('.searchFormInput').val();
-		userArtistChoice.push(artist);
+		// check to see if artist name exists in our dineAloneArtists if they dont not search and then send message. if they do then send call
+		if(dineAloneArtists.indexOf(artist) >= 0){
+			userArtistChoice.push(artist);
 
-		$('.searchFormInput').val('');
+			$('.searchFormInput').val('');
 
-		console.log("The button was pressed");
-		console.log(artist);
-		app.getArtistsInfo(userArtistChoice);
+			console.log("The button was pressed");
+			console.log(artist);
+			app.getArtistsInfo(userArtistChoice);
+		}
+		else {
+			console.log("Sorry that is not one of our Artists")
+
+		}
 	});
 }
  
