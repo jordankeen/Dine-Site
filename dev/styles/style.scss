@@ -1,3 +1,9 @@
+$whitecolor: rgba(255,255,255,1);
+$greyColor: rgba(168,168,156,1);
+$blackColor: rgba(54,54,49,1);
+$redColor: rgba(204,24,65,1);
+
+
 article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:700;}dfn{font-style:italic;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace, serif;font-size:1em;}pre{white-space:pre-wrap;word-wrap:break-word;}q{quotes:\201C \201D \2018 \2019;}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-.5em;}sub{bottom:-.25em;}img{border:0;}svg:not(:root){overflow:hidden;}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,html input[type=button],/* 1 */
 input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}button[disabled],input[disabled]{cursor:default;}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0;}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}body,figure{margin:0;}legend,button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 
@@ -16,12 +22,6 @@ h1 {
 }
 
 // This is the styling for the search bar
-input {
-	width:500px;
-	height:50px;
-	display: flex;
-	justify-content:center;
-}
 
 header {
 	display: flex;
@@ -29,6 +29,49 @@ header {
 	justify-content:center;
 	align-items:center;
 	height:100vh;
+	position: relative;
+	.splash {
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+		button {
+			width: 100px;
+			height: 40px;
+			border-radius: 8px;
+			border: #CA1D44;
+			box-shadow: 0 3px 1px $blackColor;
+			background: $redColor;
+		}
+		button:active {
+			outline: none;
+			position: relative;
+			top: 2px;
+			box-shadow: 0 1px 1px $blackColor;
+		}
+	}
+	.shrinkSplash {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+form.searchForm {
+	display: none;
+	input {
+		width:500px;
+		height:50px;
+		display: flex;
+		justify-content:center;
+	}
+}
+
+form.hiddenForm {
+	display: none;
 }
 
 .autocomplete-suggestions { 
@@ -64,7 +107,14 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	align-items: center;
 	color: #FFFFFF;
+	height: 100vh;
+	width: 100vw;
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	transition: all 0.3s ease;
 	.artistCard {
 		font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 		display: flex;
@@ -72,10 +122,10 @@ body {
 		justify-content: space-between;
 		align-items: center;
 		background: #363631;
-		width: 22%;
+		width: 80%;
 		border: 1px solid #FFFFFF;
 		border-radius: 5px;
-		margin: 1.5%;
+		// margin: 1.5%;
 		box-shadow: 0 2px 4px darken(#363631, 20%);
 		.artistCardName {
 			text-transform: uppercase;
@@ -123,6 +173,24 @@ body {
 			}
 		}
 	}
+	.fa {
+		position: absolute;
+		right: 30px;
+		top: 30px;
+		font-size: 2.8rem;
+		color: white;
+	}
+	.fa:hover {
+		cursor: pointer;
+	}
 }
+
+.showArtistContainer {
+		display: flex;
+		top: 0;
+		visibility: visible;
+		opacity: 1;
+		background: transparentize($blackColor, .3);
+	}
 
 
