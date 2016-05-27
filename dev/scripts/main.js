@@ -129,6 +129,9 @@ app.init = function() {
 	app.addToPlaylistListener();
 };
 
+app.events = function() {
+	$('.genPlayList').on('click', app.createPlaylistListener);
+};
 // app.getArtistsInfo loops through an array and gets calls the getData method to get the artist object from spotify. Note: the getData method also appends the artist object returned from spotify to the handlebars artistCardTemplate.
 app.getArtistsInfo = function(arrayName){
 	// console.log(arrayName);
@@ -161,28 +164,39 @@ app.getData = function(artistName) {
 
 // Create a function to get songs based on an artist ID.
 // method requires an artistID, a country code (e.g. CA)
-app.getSongs = function(artistID, country, numberOfSongs) {
-	$.ajax({
+app.getSongs = function(artistID) {
+	return $.ajax({
 		url: "https://api.spotify.com/v1/artists/" + artistID + "/top-tracks",
 		method: 'GET',
 		dataType: 'json',
 		data: {
-			country: country,
-		}
-	})
-	.then(function(res){
-		// console.log(res);
-		for (var i = 0; i < numberOfSongs; i++) {
-			app.songs.push(res.tracks[i].id);
+			country: 'CA',
 		}
 	});
 }
 
 
 
-// app.show = function(){
-// 	for (var i = 0; i<)
-// }
+
+app.createPlaylistListener = function(){
+	var counter = 0;
+	for (var i = 0; i < app.addedArtists.length; i++){
+		app.getSongs(app.addedArtists[i])
+			.then(function(res){
+				// console.log(res);
+				counter++;
+				for (var i = 0; i < 5; i++) {
+					app.songs.push(res.tracks[i].id);
+				}
+				if( counter === app.addedArtists.length) {
+					console.log(app.songs);
+					app.createPlaylist();
+				}
+			});
+
+	}
+};
+
 
 $(function(){
 	app.init();
@@ -281,7 +295,7 @@ app.addToPlaylistListener = function() {
 // we want to do whatever we need to do to build a playlist in our page
 
 // Join all spotify song IDs into one string and create into URL for spotify player
-// concat user selected songs into one comma separated string and store in variable
+// concat user selected into one comma separated string and store in variable
 
 app.createPlaylist = function(){
 	// Create a string of all song IDs from the app.songs array and store it in the spotifySongListChain
