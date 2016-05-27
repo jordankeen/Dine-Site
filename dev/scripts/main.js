@@ -99,13 +99,14 @@ var dineAloneArtists = [
 // Temporary Array for testing.
 app.tempArray = ['arkells','Wintersleep','You+Me','Yukon Blonde'];
 
-// Create an empty array into which we can push our artists
+// Create an empty array into which we can push our artists that have been searched/viewed
 app.artists = [];
-
 
 // Create an empty array of songs
 app.songs = [];
 
+// Create an empty array of artists that have been addedToPlaylist
+app.addedArtists = [];
 
 // Create an object of artists for the purpose of having a key that the artistCardTemplate will use (keyname: artist).
 app.artistObj = {
@@ -125,14 +126,15 @@ app.template = Handlebars.compile(app.artistCardTemplate);
 // Create an app.init function to run that will house all functions that are initialized when the page loads
 app.init = function() {
 	app.searchButtonListener();
+	app.addToPlaylistListener();
 };
 
 // app.getArtistsInfo loops through an array and gets calls the getData method to get the artist object from spotify. Note: the getData method also appends the artist object returned from spotify to the handlebars artistCardTemplate.
 app.getArtistsInfo = function(arrayName){
-	console.log(arrayName);
+	// console.log(arrayName);
 	arrayName.forEach(function(artistName){
 		app.getData(artistName);
-	})
+	});
 }
 
 // Create a method to get artists from spotify that requires an input of the artist name
@@ -149,8 +151,11 @@ app.getData = function(artistName) {
 		}
 	})
 	.then(function(res){
+		app.artists = [];
+		$('.artistsContainer').empty();
 		app.artists.push(res.artists.items[0]);
 		$('.artistsContainer').append(app.template(res.artists.items[0]));
+		app.checkAddToPlaylistStatus();
 	});
 };
 
@@ -202,21 +207,59 @@ $('#autocomplete').autocomplete({
 
 
 // make var for user choice of artist and function for on change or on select or on enter
-
+//IN HERE
 app.searchButtonListener = function(){
-	console.log("its listening");
 	$('form').on('submit', function(e){
 	var userArtistChoice = []
 		e.preventDefault();
 		var artist = $('.searchFormInput').val();
 		userArtistChoice.push(artist);
-
 		$('.searchFormInput').val('');
-
-		console.log("The button was pressed");
-		console.log(artist);
 		app.getArtistsInfo(userArtistChoice);
+		
 	});
+}
+
+// Create a function to check if artist being shown is already addedToPlaylist
+// for loop to go through each artist id in the app.addedArtists array
+// if data attribute in current artistCardTemplate is equal to it
+// add addToPlaylistPressed class
+app.checkAddToPlaylistStatus = function() {
+	console.log('app.checkAddToPlaylistStatus is running!');
+	for (var i = 0; i < app.addedArtists.length; i++) {
+		// console.log(i);
+		var currentArtistID = $('.artistsContainer').find('.addToPlaylist').data();
+		// console.log($('.artistsContainer').find('.addToPlaylist').data());
+		if (currentArtistID.artist === app.addedArtists[i]) {
+			$('.artistsContainer').find('.addToPlaylist').addClass('addToPlaylistPressed');
+				// console.log(app.addedArtists[i], "if is working");
+		};
+		// if (dynamically create id = i.id)
+	}
+}
+
+// Create a listener to add currently displayed artist to addedArtists artist on click of addToPlaylist, and...
+// change the appearance of addToPlaylist to appear added and
+app.addToPlaylistListener = function() {
+	console.log('addtoplaylistisnowlistening');
+	$('.artistsContainer').on('click', ".addToPlaylist", function(){
+		// Check if artists id is already in app.addedArtists
+		var index = app.addedArtists.indexOf(app.artists[0].id)
+		console.log(index);
+		if (index >= 0) {
+			app.addedArtists.splice(index,1)
+			console.log('i have removed item number ', index);
+			console.log(app.addedArtists);
+			$('.addToPlaylist').removeClass('addToPlaylistPressed');
+		}
+		else {
+			console.log('i am new, add to addedArtists array');
+			app.addedArtists.push(app.artists[0].id);
+			console.log(app.addedArtists);
+			$('.addToPlaylist').addClass('addToPlaylistPressed');
+		}
+		// console.log('add to play list listener is working')
+	})
 }
  
 
