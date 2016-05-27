@@ -189,6 +189,7 @@ app.createPlaylistListener = function(){
 					app.songs.push(res.tracks[i].id);
 				}
 				if( counter === app.addedArtists.length) {
+					console.log('in here')
 					console.log(app.songs);
 					app.createPlaylist();
 				}
@@ -280,10 +281,12 @@ app.addToPlaylistListener = function() {
 			$('.addToPlaylist').removeClass('addToPlaylistPressed');
 		}
 		else {
-			console.log('i am new, add to addedArtists array');
-			app.addedArtists.push(app.artists[0].id);
-			console.log(app.addedArtists);
-			$('.addToPlaylist').addClass('addToPlaylistPressed');
+			if (app.addedArtists.length < 5){
+				console.log('i am new, add to addedArtists array');
+				app.addedArtists.push(app.artists[0].id);
+				console.log(app.addedArtists);
+				$('.addToPlaylist').addClass('addToPlaylistPressed');
+			}else{console.log("you already have 5 artists")} 
 		}
 		// console.log('add to play list listener is working')
 	})
