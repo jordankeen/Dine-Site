@@ -20,6 +20,15 @@
 		</div>
 	</script>
 
+	<script id="addedArtistsTemplate" type="x-handlebars-template">
+		<div data-addedArtist={{id}} class="addedArtistsCard">
+			<div style="background-image: url({{images.[0].url}})" class="addedArtistImgContainer">
+			</div>
+			<p class="addedArtistsName">{{name}}</p>
+		</div>
+	</script>
+
+
 	<title>Dine Alone Records</title>
 </head>
 <body>
@@ -42,6 +51,15 @@
 
 	<div class="artistsContainer">
 		<!-- handlebars cards go here. -->
+	</div>
+
+	<div class="addedArtistsContainer">
+		<!-- handlebars added artists go here -->
+		<div class="play-button">
+			<img src="assets/play-button.png">
+			<h3>Create Playlist</h3>
+		</div>
+		<img class="closeAddedArtistsButton" src="assets/nounx2.png">
 	</div>
 	<div class="spotifyContainer">
 		<!-- spotify playlist goes here -->
