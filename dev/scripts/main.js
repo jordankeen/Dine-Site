@@ -137,6 +137,9 @@ app.init = function() {
 	app.tempStartButton();
 };
 
+app.events = function() {
+	$('.genPlayList').on('click', app.createPlaylistListener);
+};
 // app.getArtistsInfo loops through an array and gets calls the getData method to get the artist object from spotify. Note: the getData method also appends the artist object returned from spotify to the handlebars artistCardTemplate.
 app.getArtistsInfo = function(arrayName){
 	// console.log(arrayName);
@@ -171,28 +174,40 @@ app.getData = function(artistName) {
 
 // Create a function to get songs based on an artist ID.
 // method requires an artistID, a country code (e.g. CA)
-app.getSongs = function(artistID, country, numberOfSongs) {
-	$.ajax({
+app.getSongs = function(artistID) {
+	return $.ajax({
 		url: "https://api.spotify.com/v1/artists/" + artistID + "/top-tracks",
 		method: 'GET',
 		dataType: 'json',
 		data: {
-			country: country,
-		}
-	})
-	.then(function(res){
-		// console.log(res);
-		for (var i = 0; i < numberOfSongs; i++) {
-			app.songs.push(res.tracks[i].id);
+			country: 'CA',
 		}
 	});
 }
 
 
 
-// app.show = function(){
-// 	for (var i = 0; i<)
-// }
+
+app.createPlaylistListener = function(){
+	var counter = 0;
+	for (var i = 0; i < app.addedArtists.length; i++){
+		app.getSongs(app.addedArtists[i])
+			.then(function(res){
+				// console.log(res);
+				counter++;
+				for (var i = 0; i < 5; i++) {
+					app.songs.push(res.tracks[i].id);
+				}
+				if( counter === app.addedArtists.length) {
+					console.log('in here')
+					console.log(app.songs);
+					app.createPlaylist();
+				}
+			});
+
+	}
+};
+
 
 $(function(){
 	app.init();
@@ -286,13 +301,25 @@ app.addToPlaylistListener = function() {
 			$('.addedArtistsContainer .addedArtistsCard[data-addedartist="' + app.artists[0].id +'"]').remove(); 
 		}
 		else {
-			console.log('i am new, add to addedArtists array');
-			app.addedArtists.push(app.artists[0].id);
-			console.log(app.addedArtists);
-			$('.addToPlaylist').addClass('addToPlaylistPressed');
-			$('.artistsContainer').find('.addToPlaylist').text('Added');
-			// Send artist to added artists template in addedArtistContainer
-			$('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
+// <<<<<<< HEAD
+			if (app.addedArtists.length < 5){
+				console.log('i am new, add to addedArtists array');
+				app.addedArtists.push(app.artists[0].id);
+				console.log(app.addedArtists);
+				$('.addToPlaylist').addClass('addToPlaylistPressed');
+				$('.artistsContainer').find('.addToPlaylist').text('Added');
+				// Send artist to added artists template in addedArtistContainer
+				$('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
+			}else{console.log("you already have 5 artists")} 
+// =======
+			// console.log('i am new, add to addedArtists array');
+			// app.addedArtists.push(app.artists[0].id);
+			// console.log(app.addedArtists);
+			// $('.addToPlaylist').addClass('addToPlaylistPressed');
+			// $('.artistsContainer').find('.addToPlaylist').text('Added');
+			// // Send artist to added artists template in addedArtistContainer
+			// $('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
+// >>>>>>> 46e2d38069307b2f5edfa3cb18f33611398bec99
 		}
 		// console.log('add to play list listener is working')
 
@@ -315,7 +342,7 @@ app.tempStartButton = function() {
 }
 
 // Join all spotify song IDs into one string and create into URL for spotify player
-// concat user selected songs into one comma separated string and store in variable
+// concat user selected into one comma separated string and store in variable
 
 app.createPlaylist = function(){
 	// Create a string of all song IDs from the app.songs array and store it in the spotifySongListChain
