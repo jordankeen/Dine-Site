@@ -122,6 +122,12 @@ app.artistCardTemplate = $('#artistCardTemplate').html();
 // Compile html for handlebars template
 app.template = Handlebars.compile(app.artistCardTemplate);
 
+// Added artist Handlebars template
+// Select html from handlebars template
+app.addedArtistsTemplate = $('#addedArtistsTemplate').html();
+// Compile html for handlebars template
+app.addedTemplate = Handlebars.compile(app.addedArtistsTemplate);
+
 
 // Create an app.init function to run that will house all functions that are initialized when the page loads
 app.init = function() {
@@ -190,6 +196,10 @@ app.getSongs = function(artistID, country, numberOfSongs) {
 
 $(function(){
 	app.init();
+	// Close addedArtistsContainer on click
+	$('.closeAddedArtistsButton').on('click', function () {
+		$('.addedArtistsContainer').removeClass('show');
+	});
 });
 
 // add in jquery plug in to auto complete search bar
@@ -263,6 +273,7 @@ app.addToPlaylistListener = function() {
 	console.log('addtoplaylistisnowlistening');
 	$('.artistsContainer').on('click', ".addToPlaylist", function(){
 		// Check if artists id is already in app.addedArtists
+
 		var index = app.addedArtists.indexOf(app.artists[0].id)
 		console.log(index);
 		if (index >= 0) {
@@ -271,6 +282,8 @@ app.addToPlaylistListener = function() {
 			console.log(app.addedArtists);
 			$('.addToPlaylist').removeClass('addToPlaylistPressed');
 			$('.artistsContainer').find('.addToPlaylist').text('Add to Playlist');
+			// Remove Artist from addedArtistContainer if already present
+			$('.addedArtistsContainer .addedArtistsCard[data-addedartist="' + app.artists[0].id +'"]').remove(); 
 		}
 		else {
 			console.log('i am new, add to addedArtists array');
@@ -278,11 +291,16 @@ app.addToPlaylistListener = function() {
 			console.log(app.addedArtists);
 			$('.addToPlaylist').addClass('addToPlaylistPressed');
 			$('.artistsContainer').find('.addToPlaylist').text('Added');
+			// Send artist to added artists template in addedArtistContainer
+			$('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
 		}
 		// console.log('add to play list listener is working')
+
+		// Show addedArtistsContainer
+		$('.addedArtistsContainer').addClass('show');
+		
 	})
 }
- 
 
 
 
