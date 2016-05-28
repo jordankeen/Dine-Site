@@ -8,14 +8,28 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 	<script id="artistCardTemplate" type="x-handlebars-template">
 		<div class="artistCard">
-			<div style="background-image: url({{images.[0].url}})" class="artistCardImgContainer"></div>
-			<p class="artistCardName">{{name}}</p> 
-			{{#if genres}}
-				<p>Genre: {{#each genres}}
-					{{this}}
-				</p>{{/each}}
-			{{/if}}
+			<div style="background-image: url({{images.[0].url}})" class="artistCardImgContainer">
+				<div class="artistNameContainer">
+					<p>{{name}}</p>
+				</div>
+				<div class="artistDetailsContainer">
+					{{#if followers}}
+						<div class="followers">Followers: {{followers.total}}</div>
+					{{/if}}
+					{{#if popularity}}
+						<div class="followers">Popularity: {{popularity}}</div>
+					{{/if}}
+				</div>
+			</div>
 			<div class="buttonsContainer">
+				<div class="onSpotifyContainer">
+					{{#if uri}}
+						<a href={{uri}}><button class="listenOnSpotify">Listen on <i class="fa fa-spotify" aria-hidden="true"></i></a></button>
+					{{/if}}
+					{{#if external_urls}}
+						<a target="_blank" href={{external_urls.spotify}}><button class="viewOnSpotify">View on <i class="fa fa-spotify" aria-hidden="true"></i></a></button>
+					{{/if}}
+				</div>
 				<button data-artist={{id}} class="addToPlaylist">Add to Playlist</button>
 			</div>
 		</div>
@@ -34,11 +48,10 @@
 			<button class="tempStartButton">Start</button>
 		</div>
 		<form class="searchForm" action="">
-			<input class="searchFormInput" type="text" name="artist" id="autocomplete"/>
+			<input placeholder="Search for an artist..." class="searchFormInput" type="text" name="artist" id="autocomplete"/>
 			<input class="searchFormSubmit" type="submit" name="artist" value="submit">
 		</form>
 		<div class="artistsContainer">
-			<i class="fa fa-times-circle" aria-hidden="true"></i>
 			<!-- handlebars cards go here. -->
 		</div>
 	</header>

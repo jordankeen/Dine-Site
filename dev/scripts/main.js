@@ -156,6 +156,7 @@ app.getData = function(artistName) {
 		app.artists = [];
 		$('.artistsContainer').empty();
 		$('.artistsContainer').html('<i class="fa fa-times-circle" aria-hidden="true"></i>');
+		// $('.artistsContainer').html('<img src="assets/close.png" alt="" />')
 		app.artists.push(res.artists.items[0]);
 		$('.artistsContainer').append(app.template(res.artists.items[0]));
 		app.checkAddToPlaylistStatus();
@@ -220,12 +221,12 @@ app.searchButtonListener = function(){
 		// check to see if artist name exists in our dineAloneArtists if they dont not search and then send message. if they do then send call
 		if(dineAloneArtists.indexOf(artist) >= 0){
 			userArtistChoice.push(artist);
+			app.getArtistsInfo(userArtistChoice);
 
 			$('.searchFormInput').val('');
 
 			// console.log("The button was pressed");
 			// console.log(artist);
-			app.getArtistsInfo(userArtistChoice);
 			app.hideSearchForm();
 		}
 		else {
@@ -249,6 +250,7 @@ app.checkAddToPlaylistStatus = function() {
 		// console.log($('.artistsContainer').find('.addToPlaylist').data());
 		if (currentArtistID.artist === app.addedArtists[i]) {
 			$('.artistsContainer').find('.addToPlaylist').addClass('addToPlaylistPressed');
+			$('.artistsContainer').find('.addToPlaylist').text('Added');
 				// console.log(app.addedArtists[i], "if is working");
 		};
 		// if (dynamically create id = i.id)
@@ -268,12 +270,14 @@ app.addToPlaylistListener = function() {
 			console.log('i have removed item number ', index);
 			console.log(app.addedArtists);
 			$('.addToPlaylist').removeClass('addToPlaylistPressed');
+			$('.artistsContainer').find('.addToPlaylist').text('Add to Playlist');
 		}
 		else {
 			console.log('i am new, add to addedArtists array');
 			app.addedArtists.push(app.artists[0].id);
 			console.log(app.addedArtists);
 			$('.addToPlaylist').addClass('addToPlaylistPressed');
+			$('.artistsContainer').find('.addToPlaylist').text('Added');
 		}
 		// console.log('add to play list listener is working')
 	})
@@ -327,7 +331,7 @@ app.hideSearchForm = function() {
 };
 
 app.closeArtistContainerListener = function() {
-	$('.artistsContainer').on('click', '.fa', function(){
+	$('.artistsContainer').on('click', '.fa-times-circle', function(){
 		app.showSearchForm();
 	})
 }
@@ -336,6 +340,7 @@ app.closeArtistContainerListener = function() {
 app.showSearchForm = function() {
 	// $('.searchForm').show("fast", "swing");
 	$('.artistsContainer').removeClass("showArtistContainer");
+	$('.artistsContainer').empty();
 };
 
 

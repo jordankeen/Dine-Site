@@ -1,4 +1,4 @@
-$whitecolor: rgba(255,255,255,1);
+$whiteColor: rgba(255,255,255,1);
 $greyColor: rgba(168,168,156,1);
 $blackColor: rgba(54,54,49,1);
 $redColor: rgba(204,24,65,1);
@@ -62,11 +62,25 @@ header {
 
 form.searchForm {
 	display: none;
-	input {
+	input.searchFormInput {
 		width:500px;
 		height:50px;
-		display: flex;
+		// display: flex;
 		justify-content:center;
+		border-radius: 5px 0 0 5px;
+		border: none;
+		padding: 15px;
+		float: left;
+	}
+	input.searchFormSubmit {
+		background: rgba(204,24,65,1);
+		border: none;
+		// display: flex;
+		border-radius: 0 5px 5px 0;
+		color: white;
+		text-transform: uppercase;
+		width: 100px;
+		height:50px;
 	}
 }
 
@@ -104,7 +118,7 @@ body {
 }
 
 .artistsContainer {
-	display: flex;
+	display: none;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
@@ -120,67 +134,120 @@ body {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-start;
 		background: #363631;
-		width: 80%;
-		border: 1px solid #FFFFFF;
+		width: 70%;
+		max-width: 600px;
 		border-radius: 5px;
 		// margin: 1.5%;
-		box-shadow: 0 2px 4px darken(#363631, 20%);
-		.artistCardName {
-			text-transform: uppercase;
-		}
+		box-shadow: 0 4px 8px darken(#363631, 20%);
+		height: 70%;
+		border-radius: 5px;
+		text-transform: uppercase;
 		.artistCardImgContainer {
-			width: 100px;
-			height: 100px;
-			border: 1px solid #FFFFFF;
-			background-position: center;
+			// width: 100px;
+			// height: 100px;
+			// border: 1px solid #FFFFFF;
+			// background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
-			border-radius: 50%;
-			margin: 15px;
+			// border-radius: 50%;
+			// margin: 15px;
+
+			width: 100%;
+			border-radius: 5px 5px 0 0;
+			background-position: top;
+			// max-height: 240px;
+			min-height: 80%;
+			color: white;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: space-between;
+			flex-direction: column;
+			padding: 15px;
+			text-shadow: 0 1px 3px black;
+			text-transform: uppercase;
+			.artistDetailsContainer {
+				display: flex;
+				justify-content: space-between;
+			}
 		}
 		.buttonsContainer {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
+			width: 100%;
+			height: 20%;
+			margin: 0;
+			border-radius: 0;
 			button {
 				margin: 4px 0;
 				border: none;
 				border-radius: 5px;
 				color: #FFFFFF;
 				padding: 4px 8px;
-				font-size: 10px;
+				// font-size: 10px;
 				outline: none;
-				transition: all 0.1s ease;
+				transition: background 0.1s ease;
 			}
 			.viewMoreInfo {
 				background: #A8A89C;
 				box-shadow: 0 2px 1px darken(#A8A89C, 20%);
 			}
 			.addToPlaylist {
-				background: #CC1841;
-				box-shadow: 0 2px 1px darken(#CC1841, 20%);
+				background: $redColor;
+				box-shadow: 0 3px 1px darken(#CC1841, 20%);
+				margin: 0;
+				padding: 20px;
+				border-radius: 0 0 5px 5px;
 			}
 			button:active {
 				// outline: none;
 			}
 			.addToPlaylistPressed {
 				position: relative;
-				top: 1px;
+				top: 2px;
 				background: #A8A89C;
-				box-shadow: 0 2px 1px darken(#A8A89C, 20%);
+				box-shadow: 0 1px 0px darken(#A8A89C, 20%);
+			}
+			.onSpotifyContainer {
+				display: flex;
+				a {
+					text-decoration: none;
+					color: $whiteColor;
+					.fa {
+						color: $redColor;
+					}
+				}
+				.viewOnSpotify {
+					border-left: 1px solid $greyColor;
+				}
+				.listenOnSpotify {
+					border-right: 1px solid $greyColor;
+				}
+				.viewOnSpotify,
+				.listenOnSpotify {
+					width: 50%;
+					text-align: center;
+					background: $blackColor;
+					margin: 0;
+					padding: 20px;
+					border-bottom: 1px solid $greyColor;
+					border-top: 1px solid $greyColor;
+					border-radius: 0;
+				}
 			}
 		}
 	}
-	.fa {
+	.fa-times-circle {
 		position: absolute;
 		right: 30px;
 		top: 30px;
 		font-size: 2.8rem;
 		color: white;
 	}
-	.fa:hover {
+	.fa-times-circle:hover {
 		cursor: pointer;
 	}
 }
