@@ -1,3 +1,9 @@
+$whiteColor: rgba(255,255,255,1);
+$greyColor: rgba(168,168,156,1);
+$blackColor: rgba(54,54,49,1);
+$redColor: rgba(204,24,65,1);
+
+
 article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block;}audio,canvas,video{display:inline-block;}audio:not([controls]){display:none;height:0;}[hidden]{display:none;}html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}a:focus{outline:thin dotted;}a:active,a:hover{outline:0;}h1{font-size:2em;}abbr[title]{border-bottom:1px dotted;}b,strong{font-weight:700;}dfn{font-style:italic;}mark{background:#ff0;color:#000;}code,kbd,pre,samp{font-family:monospace, serif;font-size:1em;}pre{white-space:pre-wrap;word-wrap:break-word;}q{quotes:\201C \201D \2018 \2019;}small{font-size:80%;}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-.5em;}sub{bottom:-.25em;}img{border:0;}svg:not(:root){overflow:hidden;}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em;}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0;}button,input{line-height:normal;}button,html input[type=button],/* 1 */
 input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer;}button[disabled],input[disabled]{cursor:default;}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0;}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}body,figure{margin:0;}legend,button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}
 
@@ -16,12 +22,6 @@ h1 {
 }
 
 // This is the styling for the search bar
-input {
-	width:500px;
-	height:50px;
-	display: flex;
-	justify-content:center;
-}
 
 header {
 	display: flex;
@@ -29,6 +29,63 @@ header {
 	justify-content:center;
 	align-items:center;
 	height:100vh;
+	position: relative;
+	.splash {
+		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+		button {
+			width: 100px;
+			height: 40px;
+			border-radius: 8px;
+			border: #CA1D44;
+			box-shadow: 0 3px 1px $blackColor;
+			background: $redColor;
+		}
+		button:active {
+			outline: none;
+			position: relative;
+			top: 2px;
+			box-shadow: 0 1px 1px $blackColor;
+		}
+	}
+	.shrinkSplash {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+form.searchForm {
+	display: none;
+	input.searchFormInput {
+		width:500px;
+		height:50px;
+		// display: flex;
+		justify-content:center;
+		border-radius: 5px 0 0 5px;
+		border: none;
+		padding: 15px;
+		float: left;
+	}
+	input.searchFormSubmit {
+		background: rgba(204,24,65,1);
+		border: none;
+		// display: flex;
+		border-radius: 0 5px 5px 0;
+		color: white;
+		text-transform: uppercase;
+		width: 100px;
+		height:50px;
+	}
+}
+
+form.hiddenForm {
+	display: none;
 }
 
 .autocomplete-suggestions { 
@@ -61,68 +118,221 @@ body {
 }
 
 .artistsContainer {
-	display: flex;
+	display: none;
 	flex-wrap: wrap;
 	justify-content: center;
+	align-items: center;
 	color: #FFFFFF;
+	height: 100vh;
+	width: 100vw;
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	transition: all 0.3s ease;
 	.artistCard {
 		font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		align-items: center;
+		align-items: flex-start;
 		background: #363631;
-		width: 22%;
-		border: 1px solid #FFFFFF;
+		width: 70%;
+		max-width: 600px;
 		border-radius: 5px;
-		margin: 1.5%;
-		box-shadow: 0 2px 4px darken(#363631, 20%);
-		.artistCardName {
-			text-transform: uppercase;
-		}
+		// margin: 1.5%;
+		box-shadow: 0 4px 8px darken(#363631, 20%);
+		height: 70%;
+		border-radius: 5px;
+		text-transform: uppercase;
 		.artistCardImgContainer {
-			width: 100px;
-			height: 100px;
-			border: 1px solid #FFFFFF;
-			background-position: center;
+			// width: 100px;
+			// height: 100px;
+			// border: 1px solid #FFFFFF;
+			// background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
-			border-radius: 50%;
-			margin: 15px;
+			// border-radius: 50%;
+			// margin: 15px;
+
+			width: 100%;
+			border-radius: 5px 5px 0 0;
+			background-position: top;
+			// max-height: 240px;
+			min-height: 80%;
+			color: white;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: space-between;
+			flex-direction: column;
+			padding: 15px;
+			text-shadow: 0 1px 3px black;
+			text-transform: uppercase;
+			.artistDetailsContainer {
+				display: flex;
+				justify-content: space-between;
+			}
 		}
 		.buttonsContainer {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
+			width: 100%;
+			height: 20%;
+			margin: 0;
+			border-radius: 0;
 			button {
 				margin: 4px 0;
 				border: none;
 				border-radius: 5px;
 				color: #FFFFFF;
 				padding: 4px 8px;
-				font-size: 10px;
+				// font-size: 10px;
 				outline: none;
-				transition: all 0.1s ease;
+				transition: background 0.1s ease;
 			}
 			.viewMoreInfo {
 				background: #A8A89C;
 				box-shadow: 0 2px 1px darken(#A8A89C, 20%);
 			}
 			.addToPlaylist {
-				background: #CC1841;
-				box-shadow: 0 2px 1px darken(#CC1841, 20%);
+				background: $redColor;
+				box-shadow: 0 3px 1px darken(#CC1841, 20%);
+				margin: 0;
+				padding: 20px;
+				border-radius: 0 0 5px 5px;
 			}
 			button:active {
 				// outline: none;
 			}
 			.addToPlaylistPressed {
 				position: relative;
-				top: 1px;
+				top: 2px;
 				background: #A8A89C;
-				box-shadow: 0 2px 1px darken(#A8A89C, 20%);
+				box-shadow: 0 1px 0px darken(#A8A89C, 20%);
+			}
+			.onSpotifyContainer {
+				display: flex;
+				a {
+					text-decoration: none;
+					color: $whiteColor;
+					.fa {
+						color: $redColor;
+					}
+				}
+				.viewOnSpotify {
+					border-left: 1px solid $greyColor;
+				}
+				.listenOnSpotify {
+					border-right: 1px solid $greyColor;
+				}
+				.viewOnSpotify,
+				.listenOnSpotify {
+					width: 50%;
+					text-align: center;
+					background: $blackColor;
+					margin: 0;
+					padding: 20px;
+					border-bottom: 1px solid $greyColor;
+					border-top: 1px solid $greyColor;
+					border-radius: 0;
+				}
 			}
 		}
 	}
+	.fa-times-circle {
+		position: absolute;
+		right: 30px;
+		top: 30px;
+		font-size: 2.8rem;
+		color: white;
+	}
+	.fa-times-circle:hover {
+		cursor: pointer;
+	}
 }
+.addedArtistsContainer {
+	position: fixed;
+	top: 0;
+	height: 0%;
+	right: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.4s ease-in-out;
+	background: rgba(255,255,255,0.7);
+	width: 270px;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	flex-wrap: wrap;
+	padding: 0 15px;
+	.closeAddedArtistsButton {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		height: 30px;
+		width: 35px;
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	.play-button {
+		width: 100%;
+		text-align: center;
+		margin-bottom: 50px;
+		img {
+			width: 90px;
+			margin: 15px auto;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+		h3 {
+			margin: 0;
+			font-weight: lighter;
+			letter-spacing: 2px;
+		}
+	}
+	.addedArtistsCard {
+		text-align: center;
+		padding: 5px;
+		max-width: 110px;
+		.addedArtistImgContainer {
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+			margin: 10px;
+			border: 1px solid lightgrey;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+		p {
+			color: #CC1841;
+			letter-spacing: 1px;
+			margin: 0 auto;
+			overflow: hidden;
+			width: 90%;
+			font-size: 12px;
+			font-weight: lighter;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+	}
+}
+.addedArtistsContainer.show {
+	opacity: 1;
+	visibility: visible;
+	height: 100%;
+}
+
+
+.showArtistContainer {
+		display: flex;
+		top: 0;
+		visibility: visible;
+		opacity: 1;
+		background: transparentize($blackColor, .3);
+	}
 
 

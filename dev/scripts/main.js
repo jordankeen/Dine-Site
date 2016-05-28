@@ -122,11 +122,19 @@ app.artistCardTemplate = $('#artistCardTemplate').html();
 // Compile html for handlebars template
 app.template = Handlebars.compile(app.artistCardTemplate);
 
+// Added artist Handlebars template
+// Select html from handlebars template
+app.addedArtistsTemplate = $('#addedArtistsTemplate').html();
+// Compile html for handlebars template
+app.addedTemplate = Handlebars.compile(app.addedArtistsTemplate);
+
 
 // Create an app.init function to run that will house all functions that are initialized when the page loads
 app.init = function() {
 	app.searchButtonListener();
 	app.addToPlaylistListener();
+	app.closeArtistContainerListener();
+	app.tempStartButton();
 };
 
 app.events = function() {
@@ -156,6 +164,8 @@ app.getData = function(artistName) {
 	.then(function(res){
 		app.artists = [];
 		$('.artistsContainer').empty();
+		$('.artistsContainer').html('<i class="fa fa-times-circle" aria-hidden="true"></i>');
+		// $('.artistsContainer').html('<img src="assets/close.png" alt="" />')
 		app.artists.push(res.artists.items[0]);
 		$('.artistsContainer').append(app.template(res.artists.items[0]));
 		app.checkAddToPlaylistStatus();
@@ -201,6 +211,10 @@ app.createPlaylistListener = function(){
 
 $(function(){
 	app.init();
+	// Close addedArtistsContainer on click
+	$('.closeAddedArtistsButton').on('click', function () {
+		$('.addedArtistsContainer').removeClass('show');
+	});
 });
 
 // add in jquery plug in to auto complete search bar
@@ -232,17 +246,18 @@ app.searchButtonListener = function(){
 		// check to see if artist name exists in our dineAloneArtists if they dont not search and then send message. if they do then send call
 		if(dineAloneArtists.indexOf(artist) >= 0){
 			userArtistChoice.push(artist);
+			app.getArtistsInfo(userArtistChoice);
 
 			$('.searchFormInput').val('');
 
-			console.log("The button was pressed");
-			console.log(artist);
-			app.getArtistsInfo(userArtistChoice);
+			// console.log("The button was pressed");
+			// console.log(artist);
+			app.hideSearchForm();
 		}
 		else {
 			console.log("Sorry that is not one of our Artists");
 		}
-		userArtistChoice.push(artist);
+		// userArtistChoice.push(artist);
 		$('.searchFormInput').val('');
 		app.getArtistsInfo(userArtistChoice);
 	});
@@ -260,6 +275,7 @@ app.checkAddToPlaylistStatus = function() {
 		// console.log($('.artistsContainer').find('.addToPlaylist').data());
 		if (currentArtistID.artist === app.addedArtists[i]) {
 			$('.artistsContainer').find('.addToPlaylist').addClass('addToPlaylistPressed');
+			$('.artistsContainer').find('.addToPlaylist').text('Added');
 				// console.log(app.addedArtists[i], "if is working");
 		};
 		// if (dynamically create id = i.id)
@@ -272,6 +288,7 @@ app.addToPlaylistListener = function() {
 	console.log('addtoplaylistisnowlistening');
 	$('.artistsContainer').on('click', ".addToPlaylist", function(){
 		// Check if artists id is already in app.addedArtists
+
 		var index = app.addedArtists.indexOf(app.artists[0].id)
 		console.log(index);
 		if (index >= 0) {
@@ -279,23 +296,50 @@ app.addToPlaylistListener = function() {
 			console.log('i have removed item number ', index);
 			console.log(app.addedArtists);
 			$('.addToPlaylist').removeClass('addToPlaylistPressed');
+			$('.artistsContainer').find('.addToPlaylist').text('Add to Playlist');
+			// Remove Artist from addedArtistContainer if already present
+			$('.addedArtistsContainer .addedArtistsCard[data-addedartist="' + app.artists[0].id +'"]').remove(); 
 		}
 		else {
+// <<<<<<< HEAD
 			if (app.addedArtists.length < 5){
 				console.log('i am new, add to addedArtists array');
 				app.addedArtists.push(app.artists[0].id);
 				console.log(app.addedArtists);
 				$('.addToPlaylist').addClass('addToPlaylistPressed');
+				$('.artistsContainer').find('.addToPlaylist').text('Added');
+				// Send artist to added artists template in addedArtistContainer
+				$('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
 			}else{console.log("you already have 5 artists")} 
+// =======
+			// console.log('i am new, add to addedArtists array');
+			// app.addedArtists.push(app.artists[0].id);
+			// console.log(app.addedArtists);
+			// $('.addToPlaylist').addClass('addToPlaylistPressed');
+			// $('.artistsContainer').find('.addToPlaylist').text('Added');
+			// // Send artist to added artists template in addedArtistContainer
+			// $('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
+// >>>>>>> 46e2d38069307b2f5edfa3cb18f33611398bec99
 		}
 		// console.log('add to play list listener is working')
+
+		// Show addedArtistsContainer
+		$('.addedArtistsContainer').addClass('show');
+		
 	})
 }
- 
 
 
 
 // we want to do whatever we need to do to build a playlist in our page
+
+
+// Temporarily use start button to lauch splashHideFormLoad
+app.tempStartButton = function() {
+	$('.tempStartButton').on('click',function(){
+		app.splashHideFormLoad();
+	})
+}
 
 // Join all spotify song IDs into one string and create into URL for spotify player
 // concat user selected into one comma separated string and store in variable
@@ -308,6 +352,42 @@ app.createPlaylist = function(){
 	// insert it into the spotifyContainer in the html using the widgetCode
 	$('.spotifyContainer').html(widgetCode);
 };
+
+// create timed function that will fade from splash to search page on load.
+app.splashHideFormLoad = function() {
+	// setTimeout(function(){
+		$('.splash img').hide("slow", "swing");
+		setTimeout(function(){
+			$('.splash').addClass('shrinkSplash');
+			setTimeout(function(){
+				$('.splash').hide("fast", "swing");
+				setTimeout(function(){
+					$('.searchForm').show("slow", "swing");
+				},100);
+			},250);
+		},1000);
+	// }, 2000);
+}
+
+// Create a timed function that will hide the searchForm and show the artistsContainer
+app.hideSearchForm = function() {
+	// $('.searchForm').hide("fast", "swing");
+	$('.artistsContainer').addClass("showArtistContainer");
+};
+
+app.closeArtistContainerListener = function() {
+	$('.artistsContainer').on('click', '.fa-times-circle', function(){
+		app.showSearchForm();
+	})
+}
+
+// Create a timed function that will show the searchForm
+app.showSearchForm = function() {
+	// $('.searchForm').show("fast", "swing");
+	$('.artistsContainer').removeClass("showArtistContainer");
+	$('.artistsContainer').empty();
+};
+
 
 
 // BONUS: we can use the spotify artist id to get the songkick artist upcoming events

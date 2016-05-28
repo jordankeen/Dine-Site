@@ -5,46 +5,79 @@
 	<link rel="stylesheet" href="styles/style.css">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,500,700,300,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 	<script id="artistCardTemplate" type="x-handlebars-template">
 		<div class="artistCard">
-			<div style="background-image: url({{images.[0].url}})" class="artistCardImgContainer"></div>
-			<p class="artistCardName">{{name}}</p> 
-			{{#if genres}}
-				<p>Genre: {{#each genres}}
-					{{this}}
-				</p>{{/each}}
-			{{/if}}
+			<div style="background-image: url({{images.[0].url}})" class="artistCardImgContainer">
+				<div class="artistNameContainer">
+					<p>{{name}}</p>
+				</div>
+				<div class="artistDetailsContainer">
+					{{#if followers}}
+						<div class="followers">Followers: {{followers.total}}</div>
+					{{/if}}
+					{{#if popularity}}
+						<div class="followers">Popularity: {{popularity}}</div>
+					{{/if}}
+				</div>
+			</div>
 			<div class="buttonsContainer">
+				<div class="onSpotifyContainer">
+					{{#if uri}}
+						<a href={{uri}}><button class="listenOnSpotify">Listen on <i class="fa fa-spotify" aria-hidden="true"></i></a></button>
+					{{/if}}
+					{{#if external_urls}}
+						<a target="_blank" href={{external_urls.spotify}}><button class="viewOnSpotify">View on <i class="fa fa-spotify" aria-hidden="true"></i></a></button>
+					{{/if}}
+				</div>
 				<button data-artist={{id}} class="addToPlaylist">Add to Playlist</button>
 			</div>
 		</div>
 	</script>
 
+	<script id="addedArtistsTemplate" type="x-handlebars-template">
+		<div data-addedArtist={{id}} class="addedArtistsCard">
+			<div style="background-image: url({{images.[0].url}})" class="addedArtistImgContainer">
+			</div>
+			<p class="addedArtistsName">{{name}}</p>
+		</div>
+	</script>
+
+
 	<title>Dine Alone Records</title>
 </head>
 <body>
-	<header>
-		<h1 class="top">Dine Alone Records</h1>
-		<div>
-			<img src="assets/redbig.png" alt="">
+	<main>
+		<div class="splash">
+			<h1 class="top">Dine Alone Records</h1>
+			<div>
+				<img src="assets/redbig.png" alt="">
+			</div>
+			<h1 class="bottom">Live Stream</h1>
+			<button class="tempStartButton">Start</button>
 		</div>
-		<h1 class="bottom">Live Stream</h1>
-		<!-- insert arrow here -->
-	</header>
-	<form class="searchForm" action="">
-		<input class="searchFormInput" type="text" name="artist" id="autocomplete"/>
-		<input class="searchFormSubmit" type="submit" name="artist" value="submit">
-	</form>
+		<form class="searchForm" action="">
+			<input placeholder="Search for an artist..." class="searchFormInput" type="text" name="artist" id="autocomplete"/>
+			<input class="searchFormSubmit" type="submit" name="artist" value="submit">
+		</form>
+		<div class="artistsContainer">
+			<!-- handlebars cards go here. -->
+		</div>
+		<div class="addedArtistsContainer">
+			<!-- handlebars added artists go here -->
+			<div class="play-button">
+				<img src="assets/play-button.png">
+				<h3>Create Playlist</h3>
+			</div>
+			<img class="closeAddedArtistsButton" src="assets/nounx2.png">
+		</div>
+		<div class="spotifyContainer">
+			<!-- spotify playlist goes here -->
+		</div>
+	</main>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.2.24/jquery.autocomplete.min.js"></script>
 	<script src="scripts/main.js"></script>
-
-	<div class="artistsContainer">
-		<!-- handlebars cards go here. -->
-	</div>
-	<div class="spotifyContainer">
-		<!-- spotify playlist goes here -->
-	</div>
 </body>
 </html>
