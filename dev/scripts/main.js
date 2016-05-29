@@ -134,11 +134,22 @@ app.init = function() {
 	app.searchButtonListener();
 	app.addToPlaylistListener();
 	app.closeArtistContainerListener();
-	app.tempStartButton();
+	app.startButton();
+	app.events();
+	app.closeSpotifyContainerListener();
+	// app.littleImageListener();
 };
 
 app.events = function() {
-	$('.genPlayList').on('click', app.createPlaylistListener);
+	$('.play').on('click', function(){
+		app.createPlaylistListener();
+		$('.spotifyContainer').css('display','flex');
+		$('.searchForm').hide();
+		$('.artistsContainer').hide();
+		$('.addedArtistsContainer').hide();
+	});
+	
+
 };
 // app.getArtistsInfo loops through an array and gets calls the getData method to get the artist object from spotify. Note: the getData method also appends the artist object returned from spotify to the handlebars artistCardTemplate.
 app.getArtistsInfo = function(arrayName){
@@ -189,6 +200,7 @@ app.getSongs = function(artistID) {
 
 
 app.createPlaylistListener = function(){
+	console.log('app.createPlaylistListener is running.');
 	var counter = 0;
 	for (var i = 0; i < app.addedArtists.length; i++){
 		app.getSongs(app.addedArtists[i])
@@ -255,11 +267,20 @@ app.searchButtonListener = function(){
 			app.hideSearchForm();
 		}
 		else {
-			console.log("Sorry that is not one of our Artists");
+			// console.log("Sorry that is not one of our Artists");
+			// $('.searchFormInput').val("That's not one of our artists...");
+			$('.searchFormInput').focus();
+			$('.searchFormInput').addClass('wrong');
+			$('.searchFormInput').addClass('animated shake');
+			setTimeout(function(){
+				$('.searchFormInput').removeClass('animated shake');
+				$('.searchFormInput').removeClass('wrong');
+				$('.searchFormInput').val('');
+			}, 1000);
 		}
 		// userArtistChoice.push(artist);
-		$('.searchFormInput').val('');
-		app.getArtistsInfo(userArtistChoice);
+		// $('.searchFormInput').val('');
+		// app.getArtistsInfo(userArtistChoice);
 	});
 }
 
@@ -275,7 +296,7 @@ app.checkAddToPlaylistStatus = function() {
 		// console.log($('.artistsContainer').find('.addToPlaylist').data());
 		if (currentArtistID.artist === app.addedArtists[i]) {
 			$('.artistsContainer').find('.addToPlaylist').addClass('addToPlaylistPressed');
-			$('.artistsContainer').find('.addToPlaylist').text('Added');
+			$('.artistsContainer').find('.addToPlaylist').text('Remove');
 				// console.log(app.addedArtists[i], "if is working");
 		};
 		// if (dynamically create id = i.id)
@@ -301,30 +322,22 @@ app.addToPlaylistListener = function() {
 			$('.addedArtistsContainer .addedArtistsCard[data-addedartist="' + app.artists[0].id +'"]').remove(); 
 		}
 		else {
-// <<<<<<< HEAD
 			if (app.addedArtists.length < 4){
 				console.log('i am new, add to addedArtists array');
 				app.addedArtists.push(app.artists[0].id);
 				console.log(app.addedArtists);
 				$('.addToPlaylist').addClass('addToPlaylistPressed');
-				$('.artistsContainer').find('.addToPlaylist').text('Added');
+				$('.artistsContainer').find('.addToPlaylist').text('Remove');
 				// Send artist to added artists template in addedArtistContainer
 				$('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
-			}else{console.log("you already have 5 artists")} 
-// =======
-			// console.log('i am new, add to addedArtists array');
-			// app.addedArtists.push(app.artists[0].id);
-			// console.log(app.addedArtists);
-			// $('.addToPlaylist').addClass('addToPlaylistPressed');
-			// $('.artistsContainer').find('.addToPlaylist').text('Added');
-			// // Send artist to added artists template in addedArtistContainer
-			// $('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
-// >>>>>>> 46e2d38069307b2f5edfa3cb18f33611398bec99
+				$('.addedArtistsContainer').addClass('show');
+			}else {
+				$('.artistsContainer').find('.artistCardImgContainer').append("<div class='alert'><i class='fa fa-times-circle' aria-hidden='true'></i><p>Four artists have been chosen. You can create your playlist now or choose different artists.</p></div>");
+			} 
 		}
 		// console.log('add to play list listener is working')
 
 		// Show addedArtistsContainer
-		$('.addedArtistsContainer').addClass('show');
 		
 	})
 }
@@ -335,8 +348,8 @@ app.addToPlaylistListener = function() {
 
 
 // Temporarily use start button to lauch splashHideFormLoad
-app.tempStartButton = function() {
-	$('.tempStartButton').on('click',function(){
+app.startButton = function() {
+	$('.startButton').on('click',function(){
 		app.splashHideFormLoad();
 	})
 }
@@ -348,7 +361,7 @@ app.createPlaylist = function(){
 	// Create a string of all song IDs from the app.songs array and store it in the spotifySongListChain
 	var spotifySongListChain = app.songs.join(',');
 	// create iframe html code that uses spotifySongListChain to dynamically create an iframe, store it in a widgetCode variable, and....
-	var widgetCode = `<iframe class="spotify" src="https://embed.spotify.com/?uri=spotify:trackset:DineAloneRecords:${spotifySongListChain}" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>`;
+	var widgetCode = `<i class="fa fa-times-circle" aria-hidden="true"></i><iframe class="spotify" src="https://embed.spotify.com/?uri=spotify:trackset:DineAloneRecords:${spotifySongListChain}" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>`;
 	// insert it into the spotifyContainer in the html using the widgetCode
 	$('.spotifyContainer').html(widgetCode);
 };
@@ -387,6 +400,29 @@ app.showSearchForm = function() {
 	$('.artistsContainer').removeClass("showArtistContainer");
 	$('.artistsContainer').empty();
 };
+
+app.closeSpotifyContainerListener = function(){
+	$('.spotifyContainer').on('click', '.fa-times-circle', function(){
+		$('.spotifyContainer').empty();
+		$('.spotifyContainer').css('display', 'none');
+		$('.artistsContainer').css('display', 'flex');
+		$('.addedArtistsContainer').css('display', 'flex');
+		$('.searchForm').css('display', 'flex');
+	})
+};
+
+// app.littleImageListener = function(){
+// 	$('.addedArtistsContainer').on('click', '.addedArtistImgContainer', function(){
+// 			var thisImgName = [];
+// 			thisImgName.push($('.addedArtistsContainer').find('.addedArtistsName').text())
+// 			// var thisImgName = $('.addedArtistsContainer').find('.addedArtistsName').text();
+// 			console.log("LittleImgListener is workings here");
+// 			console.log(thisImgName);
+// 			app.getArtistsInfo(thisImgName);
+// 	})
+// }
+
+
 
 
 
