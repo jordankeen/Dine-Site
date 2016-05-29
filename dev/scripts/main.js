@@ -266,6 +266,7 @@ app.searchButtonListener = function(){
 			app.hideSearchForm();
 		}
 		else {
+
 			// console.log("Sorry that is not one of our Artists");
 			// $('.searchFormInput').val("That's not one of our artists...");
 			$('.searchFormInput').focus();

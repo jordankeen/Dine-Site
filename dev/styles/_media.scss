@@ -3,6 +3,9 @@
 @media screen and (max-width: 1280px) {
 }
 @media screen and (max-width: 940px) {
+	form.searchForm {
+		width: 80%;
+	}
 }
 @media screen and (max-width: 767px) {
 	main {
@@ -17,7 +20,18 @@
 			}
 		}
 	}
+	form.searchForm input.searchFormInput {
+		width: 100%;
+		border-radius: 5px;
+	}
+	form.searchForm input.searchFormSubmit {
+		margin-top: 20px;
+		border-radius: 5px;
+	}
 }
 
 @media screen and (max-width: 480px) {
+		form.searchForm {
+		text-align: center;
+	}
 }
