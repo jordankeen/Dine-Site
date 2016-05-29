@@ -5,29 +5,30 @@
 	<link rel="stylesheet" href="styles/style.css">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,500,700,300,900' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 	<script id="artistCardTemplate" type="x-handlebars-template">
-		<div class="artistCard">
-			<div style="background-image: url({{images.[0].url}})" class="artistCardImgContainer">
+		<div style="background-image: url({{images.[0].url}})" class="artistCard">
+			<div class="artistCardImgContainer">
 				<div class="artistNameContainer">
 					<p>{{name}}</p>
 				</div>
 				<div class="artistDetailsContainer">
 					{{#if followers}}
-						<div class="followers">Followers: {{followers.total}}</div>
+						<div class="followers"><p>Followers: {{followers.total}}</p></div>
 					{{/if}}
 					{{#if popularity}}
-						<div class="followers">Popularity: {{popularity}}</div>
+						<div class="followers"><p>Popularity: {{popularity}}</p></div>
 					{{/if}}
 				</div>
 			</div>
 			<div class="buttonsContainer">
 				<div class="onSpotifyContainer">
 					{{#if uri}}
-						<a href={{uri}}><button class="listenOnSpotify">Listen on <i class="fa fa-spotify" aria-hidden="true"></i></a></button>
+						<a href={{uri}}><button class="listenOnSpotify">Listen on  <i class="fa fa-spotify" aria-hidden="true"></i></button></a>
 					{{/if}}
 					{{#if external_urls}}
-						<a target="_blank" href={{external_urls.spotify}}><button class="viewOnSpotify">View on <i class="fa fa-spotify" aria-hidden="true"></i></a></button>
+						<a target="_blank" href={{external_urls.spotify}}><button class="viewOnSpotify">View on  <i class="fa fa-spotify" aria-hidden="true"></i></button></a>
 					{{/if}}
 				</div>
 				<button data-artist={{id}} class="addToPlaylist">Add to Playlist</button>
@@ -54,10 +55,10 @@
 				<img src="assets/redbig.png" alt="">
 			</div>
 			<h1 class="bottom">Live Stream</h1>
-			<button class="tempStartButton">Start</button>
+			<button class="startButton">START</button>
 		</div>
 		<form class="searchForm" action="">
-			<input placeholder="Search for an artist..." class="searchFormInput" type="text" name="artist" id="autocomplete"/>
+			<input placeholder="Search for a DineAlone artist..." class="searchFormInput" type="text" name="artist" id="autocomplete"/>
 			<input class="searchFormSubmit" type="submit" name="artist" value="submit">
 		</form>
 		<div class="artistsContainer">
@@ -66,10 +67,10 @@
 		<div class="addedArtistsContainer">
 			<!-- handlebars added artists go here -->
 			<div class="play-button">
-				<img src="assets/play-button.png">
-				<h3>Create Playlist</h3>
+				<img class="play" src="assets/play-button.png">
+				<p><!--   --></p>
 			</div>
-			<img class="closeAddedArtistsButton" src="assets/nounx2.png">
+			<!-- <img class="closeAddedArtistsButton" src="assets/nounx2.png"> -->
 		</div>
 		<div class="spotifyContainer">
 			<!-- spotify playlist goes here -->
