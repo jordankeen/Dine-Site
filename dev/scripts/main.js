@@ -255,7 +255,7 @@ app.searchButtonListener = function(){
 			app.hideSearchForm();
 		}
 		else {
-			console.log("Sorry that is not one of our Artists");
+			alert("Sorry that is not one of our Artists");
 		}
 		// userArtistChoice.push(artist);
 		$('.searchFormInput').val('');
