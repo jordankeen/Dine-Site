@@ -110,6 +110,9 @@ form.searchForm {
 		padding: 15px;
 		float: left;
 	}
+	input.searchFormInput.wrong:focus {
+		box-shadow: 0 1px 10px $redColor, 0 -1px 10px $redColor;
+	}
 	input.searchFormSubmit {
 		background: rgba(204,24,65,1);
 		border: none;
