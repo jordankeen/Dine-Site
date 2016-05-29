@@ -1,0 +1,23 @@
+@media screen and (min-width: 1281px) {
+}
+@media screen and (max-width: 1280px) {
+}
+@media screen and (max-width: 940px) {
+}
+@media screen and (max-width: 767px) {
+	main {
+		.splash {
+			h1 {
+				letter-spacing: 3px;
+			}
+			.splashImg {
+				img {
+					width: 80%;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 480px) {
+}
