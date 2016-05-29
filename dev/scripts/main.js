@@ -302,7 +302,7 @@ app.addToPlaylistListener = function() {
 		}
 		else {
 // <<<<<<< HEAD
-			if (app.addedArtists.length < 5){
+			if (app.addedArtists.length < 4){
 				console.log('i am new, add to addedArtists array');
 				app.addedArtists.push(app.artists[0].id);
 				console.log(app.addedArtists);
