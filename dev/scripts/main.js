@@ -258,9 +258,7 @@ app.searchButtonListener = function(){
 		if(dineAloneArtists.indexOf(artist) >= 0){
 			userArtistChoice.push(artist);
 			app.getArtistsInfo(userArtistChoice);
-
 			$('.searchFormInput').val('');
-
 			// console.log("The button was pressed");
 			// console.log(artist);
 			app.hideSearchForm();
@@ -384,7 +382,7 @@ app.splashHideFormLoad = function() {
 
 // Create a timed function that will hide the searchForm and show the artistsContainer
 app.hideSearchForm = function() {
-	// $('.searchForm').hide("fast", "swing");
+	$('.searchForm').hide("slow", "swing");
 	$('.artistsContainer').addClass("showArtistContainer");
 };
 
@@ -396,7 +394,7 @@ app.closeArtistContainerListener = function() {
 
 // Create a timed function that will show the searchForm
 app.showSearchForm = function() {
-	// $('.searchForm').show("fast", "swing");
+	$('.searchForm').show("fast", "swing");
 	$('.artistsContainer').removeClass("showArtistContainer");
 	$('.artistsContainer').empty();
 };
@@ -407,7 +405,7 @@ app.closeSpotifyContainerListener = function(){
 		$('.spotifyContainer').css('display', 'none');
 		$('.artistsContainer').css('display', 'flex');
 		$('.addedArtistsContainer').css('display', 'flex');
-		$('.searchForm').css('display', 'flex');
+		// $('.searchForm').css('display', 'flex');
 	})
 };
 

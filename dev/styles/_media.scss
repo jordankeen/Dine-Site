@@ -31,7 +31,12 @@
 }
 
 @media screen and (max-width: 480px) {
-		form.searchForm {
+	form.searchForm {
 		text-align: center;
 	}
+	main {
+		.artistsContainer {
+			font-size: 0.7rem;
+		}
+	} 
 }
