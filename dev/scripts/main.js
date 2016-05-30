@@ -8,7 +8,6 @@ var dineAloneArtists = [
 			'Alexisonfire', 
 			'At The Drive-In', 
 			'Attack in Black', 
-			'Avenue', 
 			'Billy Bragg',
  			'Black Lungs', 
  			'Black Mountain', 
@@ -31,7 +30,6 @@ var dineAloneArtists = [
 			'Fine Points',
 			'Fireside',
  			'Fly Golden Eagle',
- 			'FREEMAN',
  			'Gateway Drugs',
  			'Grade',
  			'Hannah Georgas',
@@ -91,7 +89,6 @@ var dineAloneArtists = [
 			'Walter Schreifels',
 			'Wild Child',
 			'Wintersleep',
-			'You+Me',
 			'Yukon Blonde'
 ];
 

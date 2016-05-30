@@ -38,5 +38,23 @@
 		.artistsContainer {
 			font-size: 0.7rem;
 		}
+		.addedArtistsContainer {
+			padding: 0 5px;
+			.play-button {
+				padding-top: 17px;
+				img {
+					width: 57px;
+					height: 57px;
+				}
+			}
+			.addedArtistsCard .addedArtistImgContainer {
+				width: 56px;
+				height: 56px;
+				border-width: 2px;
+			}
+			.addedArtistsCard p {
+				display: none;
+			}
+		}
 	} 
 }
