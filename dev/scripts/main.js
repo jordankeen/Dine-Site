@@ -8,7 +8,6 @@ var dineAloneArtists = [
 			'Alexisonfire', 
 			'At The Drive-In', 
 			'Attack in Black', 
-			'Avenue', 
 			'Billy Bragg',
  			'Black Lungs', 
  			'Black Mountain', 
@@ -31,7 +30,6 @@ var dineAloneArtists = [
 			'Fine Points',
 			'Fireside',
  			'Fly Golden Eagle',
- 			'FREEMAN',
  			'Gateway Drugs',
  			'Grade',
  			'Hannah Georgas',
@@ -91,7 +89,6 @@ var dineAloneArtists = [
 			'Walter Schreifels',
 			'Wild Child',
 			'Wintersleep',
-			'You+Me',
 			'Yukon Blonde'
 ];
 
@@ -136,7 +133,7 @@ app.init = function() {
 	app.startButton();
 	app.events();
 	app.closeSpotifyContainerListener();
-	// app.littleImageListener();
+	app.littleImageListener();
 };
 
 app.events = function() {
@@ -410,23 +407,31 @@ app.showSearchForm = function() {
 app.closeSpotifyContainerListener = function(){
 	$('.spotifyContainer').on('click', '.fa-times-circle', function(){
 		$('.spotifyContainer').empty();
+		app.songs = [];
 		$('.spotifyContainer').css('display', 'none');
-		$('.artistsContainer').css('display', 'flex');
 		$('.addedArtistsContainer').css('display', 'flex');
-		// $('.searchForm').css('display', 'flex');
+		$('.searchForm').css('display', 'flex');
 	})
 };
 
-// app.littleImageListener = function(){
-// 	$('.addedArtistsContainer').on('click', '.addedArtistImgContainer', function(){
-// 			var thisImgName = [];
-// 			thisImgName.push($('.addedArtistsContainer').find('.addedArtistsName').text())
-// 			// var thisImgName = $('.addedArtistsContainer').find('.addedArtistsName').text();
-// 			console.log("LittleImgListener is workings here");
-// 			console.log(thisImgName);
-// 			app.getArtistsInfo(thisImgName);
-// 	})
-// }
+app.littleImageListener = function(){
+	$('.addedArtistsContainer').on('click', '.removeImg', function(e){
+			console.log(this);
+
+			var thisArtist = $(this).closest('.addedArtistsCard').data();
+			var thisArtistId = thisArtist.addedartist;
+			for (var i = 0; i < app.addedArtists.length; i++){
+				if (app.addedArtists[i] === thisArtistId){
+					app.addedArtists.splice(i,1);
+				}
+			}
+			console.log(app.addedArtists)
+
+			$(this).closest('.addedArtistsCard').remove();
+			app.showSearchForm();
+	})
+
+}
 
 
 
