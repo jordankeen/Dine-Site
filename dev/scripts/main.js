@@ -263,6 +263,14 @@ app.searchButtonListener = function(){
 			// console.log(artist);
 			app.hideSearchForm();
 		}
+		else if (artist === "heather") {
+			userArtistChoice.push("Taylor Swift");
+			app.getArtistsInfo(userArtistChoice);
+			$('.searchFormInput').val('');
+			// console.log("The button was pressed");
+			// console.log(artist);
+			app.hideSearchForm();
+		}
 		else {
 
 			// console.log("Sorry that is not one of our Artists");
