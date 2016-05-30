@@ -12,7 +12,7 @@ html, button {
 
 p {
 	font-family: 'helvetica', sans-serif;
-	font-weight: 100;
+	font-weight: normal;
 }
 
 body {
@@ -143,6 +143,7 @@ form.hiddenForm {
 	border: 1px solid #999; 
 	background: #FFF; 
 	overflow: auto; 
+	font-weight: 300;
 }
 .autocomplete-suggestion { 
 	padding: 2px 5px; 
@@ -154,7 +155,7 @@ form.hiddenForm {
 }
 .autocomplete-suggestions strong { 
 	font-weight: normal; 
-	color: red; 
+	color: $redColor; 
 }
 .autocomplete-group { 
 	padding: 2px 5px; 
@@ -213,7 +214,7 @@ form.hiddenForm {
 			align-items: space-between;
 			flex-direction: column;
 			padding: 15px;
-			text-shadow: 0 1px 3px black;
+			text-shadow: 0 2px 4px black;
 			text-transform: uppercase;
 			.artistDetailsContainer {
 				display: flex;
@@ -371,6 +372,22 @@ form.hiddenForm {
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.removeImg {
+				opacity: 0;
+				visibility: hidden;
+				font-size: 30px;
+				transition:all 0.1s ease;
+				color: white;
+				font-size: 68px;
+				cursor: pointer;
+			}
+			&:hover .removeImg {
+				opacity: 1;
+				visibility: visible;
+			}
 		}
 		p {
 			color: $blackColor;
