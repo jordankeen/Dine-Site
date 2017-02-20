@@ -2,23 +2,20 @@
 
 $whiteColor: rgba(255,255,255,1);
 $greyColor: rgba(168,168,156,1);
-$blackColor: rgba(54,54,49,1);
+$blackColor: #1d1d1c;
 $redColor: rgba(204,24,65,1);
 
 html, button {
 	font-family: 'roboto', sans-serif;
 	font-weight: 100;
 }
-
+body {
+	background: $blackColor;
+}
 p {
 	font-family: 'helvetica', sans-serif;
 	font-weight: normal;
 }
-
-body {
-	background: transparentize($blackColor, .3);
-}
-
 h1 {
 	font-family: 'roboto';
 	font-weight: 100;
@@ -30,14 +27,10 @@ h1 {
 	padding: 0 10px;
 	z-index: 1;
 }
-
-// This is the styling for the search bar
-
+.bottom {
+	font-size: 23px;
+}
 main {
-	display: flex;
-	flex-direction:column;
-	justify-content:center;
-	align-items:center;
 	height:100vh;
 	position: relative;
 	max-width: 1280px;
@@ -46,6 +39,7 @@ main {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin: 20px 0;
 	}
 	.alert {
 		position: absolute;
@@ -92,6 +86,7 @@ main {
 			background: $redColor;
 			color: $whiteColor;
 			min-height: 40px;
+			margin-top: 20px;
 		}
 		button:active {
 			outline: none;
@@ -99,20 +94,27 @@ main {
 			top: 2px;
 			box-shadow: 0 1px 1px $blackColor;
 		}
+		button:focus {
+			outline: transparent;
+		}
 	}
 	.shrinkSplash {
 		opacity: 0;
 		visibility: hidden;
 	}
 }
-
+.form-box {
+	display: none;
+	height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
 form.searchForm {
 	display: none;
 	width: 60%;
 	input.searchFormInput {
 		width: 80%;
 		height:50px;
-		// display: flex;
 		justify-content:center;
 		border-radius: 5px 0 0 5px;
 		border: none;
@@ -125,7 +127,6 @@ form.searchForm {
 	input.searchFormSubmit {
 		background: rgba(204,24,65,1);
 		border: none;
-		// display: flex;
 		border-radius: 0 5px 5px 0;
 		color: white;
 		text-transform: uppercase;
@@ -134,11 +135,9 @@ form.searchForm {
 		height:50px;
 	}
 }
-
 form.hiddenForm {
 	display: none;
 }
-
 .autocomplete-suggestions { 
 	border: 1px solid #999; 
 	background: #FFF; 
@@ -164,14 +163,13 @@ form.hiddenForm {
 	display: block; 
 	border-bottom: 1px solid #000; 
 }
-
 .artistsContainer {
 	display: none;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
 	color: #FFFFFF;
-	height: 75%;
+	height: 80%;
 	width: 100%;
 	opacity: 0;
 	visibility: hidden;
@@ -186,26 +184,17 @@ form.hiddenForm {
 		width: 80%;
 		max-width: 600px;
 		border-radius: 5px;
-		// margin: 1.5%;
 		box-shadow: 0 4px 8px darken(#363631, 20%);
-		height: 90%;
+		height: 80%;
 		border-radius: 5px;
 		text-transform: uppercase;
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: top;
 		.artistCardImgContainer {
-			// width: 100px;
-			// height: 100px;
-			// border: 1px solid #FFFFFF;
-			// background-position: center;
-			// border-radius: 50%;
-			// margin: 15px;
-
 			width: 100%;
 			border-radius: 5px 5px 0 0;
 			background-position: top;
-			// max-height: 240px;
 			min-height: 80%;
 			color: white;
 			display: flex;
@@ -236,7 +225,6 @@ form.hiddenForm {
 				border-radius: 5px;
 				color: #FFFFFF;
 				padding: 4px 8px;
-				// font-size: 10px;
 				outline: none;
 				transition: background 0.1s ease;
 				text-transform: uppercase;
@@ -249,20 +237,12 @@ form.hiddenForm {
 				background: $redColor;
 				box-shadow: 0 3px 1px darken(#CC1841, 20%);
 				margin: 0;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				// padding: 15px;
 				height: 50%;
 				border-radius: 0 0 5px 5px;
 				font-weight: 300;
 			}
-			button:active {
-				// outline: none;
-			}
 			.addToPlaylistPressed {
 				position: relative;
-				top: 2px;
 				background: #A8A89C;
 				box-shadow: 0 1px 0px darken(#A8A89C, 20%);
 			}
@@ -287,32 +267,18 @@ form.hiddenForm {
 				}
 				.viewOnSpotify,
 				.listenOnSpotify {
-					display: flex;
-					justify-content: center;
-					align-items: center;
 					height: 100%;
 					width: 100%;
 					text-align: center;
-					background: $blackColor;
+					background: $whiteColor;
+					color: $blackColor;
 					margin: 0;
-					// padding: 15px;
-					// border-bottom: 1px solid $greyColor;
 					border-top: 1px solid $greyColor;
 					border-radius: 0;
 					font-weight: 300;
 				}
 			}
 		}
-	}
-	.fa-times-circle {
-		position: absolute;
-		right: 30px;
-		top: 30px;
-		font-size: 2.8rem;
-		color: white;
-	}
-	.fa-times-circle:hover {
-		cursor: pointer;
 	}
 }
 .addedArtistsContainer {
@@ -324,7 +290,7 @@ form.hiddenForm {
 	opacity: 0;
 	visibility: hidden;
 	transition: all 0.4s ease-in-out;
-	background: rgba(255,255,255,0.7);
+	background: $whiteColor;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -345,11 +311,9 @@ form.hiddenForm {
 		order: 6;
 		text-align: center;
 		padding-top: 6px;
-		// margin-bottom: 50px;
 		img {
 			width: 80px;
 			height: 80px;
-			// margin: 15px auto;
 			&:hover {
 				cursor: pointer;
 			}
@@ -369,7 +333,6 @@ form.hiddenForm {
 			height: 80px;
 			border-radius: 50%;
 			margin: 10px auto;
-			border: 3px solid $redColor;
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -407,38 +370,81 @@ form.hiddenForm {
 .addedArtistsContainer.show {
 	opacity: 1;
 	visibility: visible;
-	height: 25%;
+	height: 20%;
 	width: 100%;
 }
-
-
 .showArtistContainer {
 	display: flex;
 	top: 0;
 	visibility: visible;
 	opacity: 1;
-	// background: transparentize($blackColor, .3);
 }
-
 .spotifyContainer {
 	z-index: 5;
 	background: $blackColor;
-	width: 100vw;
-	height: 100%;
 	display: none;
 	justify-content: center;
 	flex-direction: column-reverse;
 	align-items: center;
 	.fa-times-circle {
 		position: absolute;
-		left: 30px;
+		right: 30px;
 		top: 30px;
-		font-size: 2.8rem;
+		font-size: 25px;
 		color: white;
 	}
 	.fa-times-circle:hover {
 		cursor: pointer;
 	}
+	.spotify {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+.info-icon {
+	display: none;
+	color: $whiteColor;
+	font-size: 18px;
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 3;
+}
+.info-container {
+	display: none;
+	background: $redColor;
+    color: $whiteColor;
+    position: absolute;
+    top: 40px;
+    left: 70px;
+    border-radius: 5px;
+    max-width: 470px;
+    padding: 24px;
+    font-size: 14px;
+    line-height: 1.3;
+    span {
+    	border-bottom: 3px solid white;
+    	padding-bottom: 3px;
+    }
+}
+.add-another-artist {
+	position: absolute;
+   	bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    background-color: #cc1841;
+    color: white;
+    border: none;
+    padding: 8px 11px;
+    border-radius: 8px;
+    border: #cc1841;
+    box-shadow: 0 3px 1px #710d24;
+    outline: none;
 }
 
 @import 'media';
