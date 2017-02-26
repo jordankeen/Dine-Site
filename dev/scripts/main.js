@@ -135,6 +135,7 @@ app.init = function() {
 	app.littleImageListener();
 	app.closeAddedArtistContainer();
 	app.infoMessage();
+	app.maxArtistsMessage();
 };
 
 // Generate playlist function
@@ -217,10 +218,6 @@ app.createPlaylistListener = function(){
 $(function(){
 	// init function
 	app.init();
-	// // Close addedArtistsContainer on click
-	// $('.closeAddedArtistsButton').on('click', function () {
-	// 	$('.addedArtistsContainer').removeClass('show');
-	// });
 });
 
 
@@ -317,7 +314,7 @@ app.addToPlaylistListener = function() {
 				$('.addedArtistsContainer').append(app.addedTemplate(app.artists[0]));
 				$('.addedArtistsContainer').addClass('show');
 			}else {
-				$('.artistsContainer').find('.artistCardImgContainer').append("<div class='alert'><i class='fa fa-times-circle' aria-hidden='true'></i><p>Four artists have been chosen. You can create your playlist now or choose different artists.</p></div>");
+				$('.artistsContainer').find('.artistCardImgContainer').append("<div class='alert'><i class='fa fa-times-circle alert-message' aria-hidden='true'></i><p>Four artists have been chosen. You can create your playlist now or choose different artists.</p></div>");
 			} 
 		}
 		
@@ -358,7 +355,7 @@ app.splashHideFormLoad = function() {
 	},1000);
 };
 
-// Function to hide seach input and show artist container
+// Function to hide search input and show artist container
 app.hideSearchForm = function() {
 	$('.searchForm').hide("slow", "swing");
 	$('.artistsContainer').addClass("showArtistContainer");
@@ -413,6 +410,13 @@ app.infoMessage = function () {
 		$('.info-container').toggle();
 		$(this).toggleClass('fa-times-circle');
 		$(this).toggleClass('fa-info-circle');
+	});
+};
+
+// Function to close artist limit message
+app.maxArtistsMessage = function() {
+	$('.artistsContainer').on('click', '.fa-times-circle', function(){
+		app.showSearchForm();
 	});
 };
 
